@@ -30,6 +30,22 @@
      ]
  };
 
+ // My example album
+ var albumHills = {
+     title: 'The Smokies',
+     artist: 'Smokey Bear',
+     label: 'Wild',
+     year: '1974',
+     albumArtUrl: 'assets/images/album_covers/09.png',
+     songs: [
+         { title: 'Windy Roads', duration: '2:50' },
+         { title: 'The Rain', duration: '4:39' },
+         { title: 'Unlit Fire', duration: '3:43'},
+         { title: 'Trail Blazed', duration: '6:39' },
+         { title: 'Long Way Home', duration: '1:11'}
+     ]
+ };
+
  var createSongRow = function(songNumber, songName, songLength) {
      var template =
         '<tr class="album-view-song-item">'
@@ -67,4 +83,19 @@
  
  window.onload = function() {
      setCurrentAlbum(albumPicasso);
+	 
+	 var currentAlbum = 0;
+	 
+	 document.getElementsByClassName('album-cover-art')[0].addEventListener("click", function() {
+				  
+	 var albumList = [albumPicasso, albumMarconi, albumHills];
+		 
+		 currentAlbum++;
+		 if (currentAlbum >= albumList.length) {
+			 currentAlbum = 0;
+		 }
+		 setCurrentAlbum(albumList[currentAlbum]);
+				  
+				  });
  };
+
