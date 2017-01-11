@@ -34,65 +34,63 @@ var createSongRow = function(songNumber, songName, songLength) {
       ;
  
 	 var $row = $(template);
-	
-	 
-var clickHandler = function() {
-	
-	var songNumber = parseInt($(this).attr('data-song-number'));
 
-	if (currentlyPlayingSongNumber !== null) {
-		// Revert to song number for currently playing song because user started playing new song.
-		var currentlyPlayingCell = getSongNumberCell(currentlyPlayingSongNumber);
-		
-		currentlyPlayingCell = getSongNumberCell(currentlyPlayingSongNumber);
-		currentlyPlayingCell.html(currentlyPlayingSongNumber);
-	}
+	 
+	var clickHandler = function() {
 	
-	if (currentlyPlayingSongNumber !== songNumber) {
-		// Switch from Play -> Pause button to indicate new song is playing.
-		setSong(songNumber);
-		currentSoundFile.play();
-        $(this).html(pauseButtonTemplate);
-        currentSongFromAlbum = currentAlbum.songs[songNumber - 1];
-        updatePlayerBarSong();
-		
-	} else if (currentlyPlayingSong === songNumber) {
-      	if (currentSoundFile.isPaused()) {
-       		$(this).html(pauseButtonTemplate);
-           	$('.main-controls .play-pause').html(playerBarPauseButton);
-           	currentSoundFile.play();
-		} else {
-          	$(this).html(playButtonTemplate);
-            $('.main-controls .play-pause').html(playerBarPlayButton);
-            currentSoundFile.pause();   
-       	}
+		var songNumber = parseInt($(this).attr('data-song-number'));
+
+		if (currentlyPlayingSongNumber !== null) {
+			// Revert to song number for currently playing song because user started playing new song.
+			var currentlyPlayingCell = getSongNumberCell(currentlyPlayingSongNumber);
+
+			currentlyPlayingCell = getSongNumberCell(currentlyPlayingSongNumber);
+			currentlyPlayingCell.html(currentlyPlayingSongNumber);
+		}
+
+		if (currentlyPlayingSongNumber !== songNumber) {
+			// Switch from Play -> Pause button to indicate new song is playing.
+			setSong(songNumber);
+			currentSoundFile.play();
+			$(this).html(pauseButtonTemplate);
+			currentSongFromAlbum = currentAlbum.songs[songNumber - 1];
+			updatePlayerBarSong();
+
+		} else if (currentlyPlayingSongNumber === songNumber) {
+			if (currentSoundFile.isPaused()) {
+				$(this).html(pauseButtonTemplate);
+				$('.main-controls .play-pause').html(playerBarPauseButton);
+				currentSoundFile.play();
+			} else {
+				$(this).html(playButtonTemplate);
+				$('.main-controls .play-pause').html(playerBarPlayButton);
+				currentSoundFile.pause();   
+			}
+		}
+	};
+
+	var onHover = function(event) {
+		var songNumberCell = $(this).find('.song-item-number');
+		var songNumber = parseInt(songNumberCell.attr('data-song-number'));
+
+		if (songNumber !== currentlyPlayingSongNumber) {
+			songNumberCell.html(playButtonTemplate);
+		}
+	};
+
+	var offHover = function(event) {
+		var songNumberCell = $(this).find('.song-item-number');
+		var songNumber = parseInt(songNumberCell.attr('data-song-number'));
+
+			 if (songNumber !== currentlyPlayingSongNumber) {
+				 songNumberCell.html(songNumber);
+			 }
+	};
+	$row.find('.song-item-number').click(clickHandler);
+	$row.hover(onHover, offHover);
+	return $row;
+
 };
-	 
-var onHover = function(event) {
-	var songNumberCell = $(this).find('.song-item-number');
-    var songNumber = parseInt(songNumberCell.attr('data-song-number'));
-
-        if (songNumber !== currentlyPlayingSongNumber) {
-            songNumberCell.html(playButtonTemplate);
-        }
-    };
-
-var offHover = function(event) {
-    var songNumberCell = $(this).find('.song-item-number');
-	var songNumber = parseInt(songNumberCell.attr('data-song-number'));
-		 
-		 if (songNumber !== currentlyPlayingSongNumber) {
-			 songNumberCell.html(songNumber);
-		 }
-     };
- 
-	 	$row.find('.song-item-number').click(clickHandler);
-     	$row.hover(onHover, offHover);
-     	return $row;
-	
-	console.log("songNumber type is " + typeof songNumber + "\n and currentlyPlayingSongNumber type is " + typeof currentlyPlayingSongNumber);
-
- };
 
  var setCurrentAlbum = function(album) {
      currentAlbum = album;
