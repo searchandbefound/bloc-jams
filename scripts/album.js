@@ -43,8 +43,6 @@ var createSongRow = function(songNumber, songName, songLength) {
 		if (currentlyPlayingSongNumber !== null) {
 			// Revert to song number for currently playing song because user started playing new song.
 			var currentlyPlayingCell = getSongNumberCell(currentlyPlayingSongNumber);
-
-			currentlyPlayingCell = getSongNumberCell(currentlyPlayingSongNumber);
 			currentlyPlayingCell.html(currentlyPlayingSongNumber);
 		}
 
@@ -201,19 +199,17 @@ var previousSong = function() {
 };
 
 var togglePlayFromPlayerBar = function() {
-	
-	if (playerBarPauseButton.click()) {
-		$('.song-item-number') = playerBarPauseButton;
+	var currentlyPlayingCell = getSongNumberCell(currentlyPlayingSongNumber);
+
+	if (currentSoundFile.isPaused()) {
+		currentlyPlayingCell.html(pauseButtonTemplate);
+		playPause.html(playerBarPauseButton);
+		currentSoundFile.play();
+	} else {
+		currentlyPlayingCell.html(playButtonTemplate);
+		playPause.html(playerBarPlayButton);
+		currentSoundFile.pause();   
 	}
-	// Change the song number cell from a play button to a pause button
-	// Change the HTML of the player bar's play button to a pause button
-	// Play the song
-	
-	// if song is playing and pause button is clicked
-	// Change the song number cell from a pause button to a play button
-	// Change the HTML of the player bar's pause button to a play button
-	// Pause the song
-	
 };
 
 var playButtonTemplate = '<a class="album-song-button"><span class="ion-play"></span></a>';
@@ -227,7 +223,7 @@ var currentSoundFile = null;
 var currentVolume = 80;
 var $previousButton = $('.main-controls .previous');
 var $nextButton = $('.main-controls .next');
-var playPause = $('main-controls .play-pause');
+var playPause = $('.main-controls .play-pause');
 
 
  $(document).ready(function() {
