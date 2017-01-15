@@ -127,6 +127,20 @@ var createSongRow = function(songNumber, songName, songLength) {
      }
  };
 
+var setCurrentTimeInPlayerBar = function(currentTime) {
+	$('.current-time').text();
+};
+
+var setTotalTimeInPlayerBar = function(totalTime) {
+	$('.total-time').text();
+	
+};
+
+var filterTimeCode = function(timeInSeconds) {
+	
+	
+};
+
 var updateSeekBarWhileSongPlays = function() {
 	
 	if (currentSoundFile) {
@@ -138,7 +152,8 @@ var updateSeekBarWhileSongPlays = function() {
 			updateSeekPercentage($seekBar, seekBarFillRatio);
 		});
 	}
-}
+	setCurrentTimeInPlayerBar();
+};
 
 var updateSeekPercentage = function($seekBar, seekBarFillRatio) {
 	var offsetXPercent = seekBarFillRatio * 100;
@@ -191,6 +206,7 @@ var setupSeekBars = function() {
 		});	
 	});
 };
+
 
  var trackIndex = function(album, song) {
      return album.songs.indexOf(song);
